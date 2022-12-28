@@ -1,0 +1,57 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}{% trans "RMDeal" %}{% endblock %}</title>
+  <link href="{% static "css/base.css" id="theme"  %}" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="{{ STATIC_URL}}/static/logo/logo.jpg">
+</head>
+<body>
+  <div id="header">
+    <img  class="logo" src="{{ STATIC_URL}}/static/logo/gif.gif" style="width: 50px; height: 50px;"></a>
+    <a href="/" class="logo">{% trans "Скины" %}</a>
+    </div>
+  </div>
+  <div id="subheader">
+	
+    <div class="cart">
+      {% with total_items=cart|length %}
+          {% if cart|length > 0 %}
+            {% trans "Корзина" %}
+            <a href="{% url "cart:cart_detail" %}">
+              {% blocktrans with total_items_plural=total_items|pluralize  total_price=cart.get_total_price %}
+                {{ total_items }} item{{ total_items_plural }},
+                ${{ total_price }}
+              {% endblocktrans %}
+            </a>
+          {% else %}
+            {% trans "Корзина" %}
+          {% endif %}
+        {% endwith %}
+	 </div>
+  </div>
+<script src="{{ STATIC_URL}}/static/js/script.js"></script>
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+<div class="color-panel">
+    <div id="white" data-color="#fff" onclick="changeColor('white')">
+    </div>
+    <div id="light" data-color="#aaa" onclick="changeColor('light')">
+    </div>
+    <div id="dark" data-color="#593e3e" onclick="changeColor('dark')"> 
+    </div>
+</div>
+<script>
+function changeColor(colorValue) {
+    document.body.style.background =     document.getElementById(colorValue).dataset.color;
+}
+</script>
+</body>
+</html>
